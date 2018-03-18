@@ -14,7 +14,7 @@ int main (void)
 			printf("my super simple shell ");
 	        	command = getLine();
 			argv = makeStrtok(command);
-			filePath = getPath(argv[0]);
+			filePath = navPath(argv[0]);
 			argv[0] = filePath;
 			execve(argv[0],argv,NULL);
 		}
