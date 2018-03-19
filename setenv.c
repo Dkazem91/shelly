@@ -9,12 +9,17 @@ int _strLen(char *string)
 int _setenv(const char *name, const char *value, int overwrite)
 {
 	extern char **environ;
-	char *newEnv, *compare;
-	int envLen = 0, same = 0,vaLen = _strLen(value), i = 0, naLen = _strLen(name);
+	char *newEnv, *compare,*nameCopy,*valCopy;
+	int envLen = 0, same = 0;
+	int vaLen, i = 0, naLen;
 
-	while(environ[len])
+	valCopy = str_concat(valCopy, value);
+	nameCopy = str_concat(nameCopy, name);
+	vaLen = _strLen(valCopy);
+	naLen = _strLen(nameCopy);
+	while(environ[envLen])
 	{
-		if (_strcmp(environ[len],name))
+		if (_strcmp(environ[envLen],nameCopy))
 			same = envLen;
 		envLen++;
 	}
@@ -23,8 +28,8 @@ int _setenv(const char *name, const char *value, int overwrite)
 	{
 		if(overwrite)
 		{
-			newEnv = str_concat(name,"=");
-			newEnv = str_concat(newEnv,value);
+			newEnv = str_concat(nameCopy,"=");
+			newEnv = str_concat(newEnv,valCopy);
 			environ[same] = newEnv;
 			return(0);
 		}
@@ -36,11 +41,15 @@ int _setenv(const char *name, const char *value, int overwrite)
 	}
 	else
 	{
-		environ = realloc(environ,envLen + 1);
-		newEnv = str_concat(name,"=");
-		newEnv = str_concat(newEnv,value);
-		environ[envLen + 1] = newEnv;
+		environ = realloc(environ,envLen + 2);
+		newEnv = str_concat(nameCopy,"=");
+		newEnv = str_concat(newEnv,valCopy);
+		environ[envLen] = newEnv;
 		return (0);
 	}
 
+}
+int main(void)
+{
+	_setenv("dog","spike",0);
 }

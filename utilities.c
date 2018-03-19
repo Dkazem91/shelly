@@ -36,7 +36,7 @@ char *_strdup(char *str)
         return (t);
 
 }
-char *str_concat(char *s1, char *s2)
+char *str_concat(const char *s1, const char *s2)
 {
 	int i, len1, len2;
         char *conc;

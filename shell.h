@@ -12,7 +12,7 @@ char **makeStrtok(char *string);
 char *getPath(char *string);
 int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
-char *str_concat(char *s1, char *s2);
+char *str_concat(const char *s1, const char *s2);
 char *navPath(char *string);
 void *_realloc(void *ptr, unsigned int new_size);
 #endif

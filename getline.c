@@ -5,6 +5,8 @@ char *getLine(void)
 	ssize_t read;
 	size_t len = 0;
 
-	getline(&line, &len,stdin);
+	printf("my super simple shell ");
+	if(getline(&line, &len,stdin) == -1)
+		exit(-1);
 	return(line);
 }
