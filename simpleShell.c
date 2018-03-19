@@ -2,20 +2,18 @@
 int main (void)
 {
 	int i = 0;
-	char **argv;
-	char *command;
-	char *token;
-	char *filePath;
+	char **argv, *command,*token,*filePath;
+
 	while(i == 0)
 	{
+
+		printf("my super simple shell ");
+		command = getLine();
+		argv = makeStrtok(command);
+		filePath = navPath(argv[0]);
+		argv[0] = filePath;
 		if(fork() == 0)
 		{
-
-			printf("my super simple shell ");
-	        	command = getLine();
-			argv = makeStrtok(command);
-			filePath = navPath(argv[0]);
-			argv[0] = filePath;
 			execve(argv[0],argv,NULL);
 		}
 		else

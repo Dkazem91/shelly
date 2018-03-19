@@ -9,6 +9,13 @@ char *navPath(char *string)
 
 	if(stat(string,&st) == 0)
 	  return (string);
+	full = str_concat("/home/vagrant/shelly/",string); //check built-ins
+	if(stat(full,&st) == 0)
+		return(full);
+	else
+	{
+		free(full);
+	}
 	while(environ[i])
 	{
 		if(_strcmp(environ[i],compare))
@@ -28,5 +35,5 @@ char *navPath(char *string)
 	free(full);
 	free(copy);
 	perror("wrong thing happened!");
-	exit(-1);
+	return (NULL);
 }

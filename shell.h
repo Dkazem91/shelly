@@ -14,4 +14,5 @@ int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
 char *str_concat(char *s1, char *s2);
 char *navPath(char *string);
+void *_realloc(void *ptr, unsigned int new_size);
 #endif
