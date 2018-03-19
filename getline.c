@@ -6,7 +6,12 @@ char *getLine(void)
 	size_t len = 0;
 
 	printf("my super simple shell ");
-	if(getline(&line, &len,stdin) == -1)
-		exit(-1);
+	read = getline(&line, &len,stdin);
+	if(read <= 0)
+	{
+		perror("error");
+		exit(99);
+	}
+	printf("%ld\n", read);
 	return(line);
 }

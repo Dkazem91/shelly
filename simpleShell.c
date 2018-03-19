@@ -15,11 +15,14 @@ int main (void)
 		if(fork() == 0)
 		{
 			execve(argv[0],argv,environ);
+			printf("error after execute\n");
+			i = 1;
 		}
 		else
 		{
 			wait(NULL);
 		}
+		free(command);
 	}
 
 	free(argv);
