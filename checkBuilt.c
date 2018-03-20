@@ -1,8 +1,24 @@
 #include "shell.h"
-void checkBuilt(char *string)
+int checkBuilt(char **argv)
 {
-	if(_strcmp(string,"exit"))
+	int found = 0, i = 0;
+	while(argv[i])
+		i++;
+	if(_strcmp(argv[0],"exit"))
 	{
-		exit(0);
+		exit(1);
 	}
+
+	if(_strcmp(argv[0],"setenv"))
+	{
+		int overwrite = argv[3][0] - '0';
+		_setenv(argv[1],argv[2],overwrite);
+		return(1);
+	}
+	if(_strcmp(argv[0],"unset"))
+	{
+		_unsetenv(argv[1]);
+		return(1);
+	}
+	return (0);
 }

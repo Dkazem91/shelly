@@ -95,8 +95,3 @@ int _unsetenv(const char *name)
 		printf("%s\n",environ[same++]);
 
 }
-int main (void)
-{
-	_setenv("dog","whatever",0);
-	_unsetenv("dog");
-}

@@ -15,5 +15,7 @@ char *_strdup(char *str);
 char *str_concat(const char *s1, const char *s2);
 char *navPath(char *string);
 void *_realloc(void *ptr, unsigned int new_size);
-void checkBuilt(char *string);
+int checkBuilt(char **argv);
+int _setenv(const char *name, const char *value, int overwrite);
+int _unsetenv(const char *name);
 #endif

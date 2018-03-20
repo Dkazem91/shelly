@@ -11,17 +11,16 @@ int main (void)
 	{
 		command = getLine();
 		argv = makeStrtok(command);
-		filePath = navPath(argv[0]);
-		argv[0] = filePath;
+		if(checkBuilt(argv) != 1)
+		{
+			filePath = navPath(argv[0]);
+			argv[0] = filePath;
+		}
 		child = fork();
 		if(child == 0)
 		{
 			execve(argv[0],argv,NULL);
 			exit(99);
-		}
-		if(child == -1)
-		{
-			exit(1);
 		}
 		wait(&status);
 		free(argv[0]);

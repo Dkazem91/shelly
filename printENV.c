@@ -7,7 +7,6 @@ char *navPath(char *string)
 	struct stat st;
 	if(string == NULL)
 		return (NULL);
-	checkBuilt(string);
 	if(stat(string,&st) == 0)
 	  return (string);
 	else
