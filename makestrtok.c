@@ -16,6 +16,6 @@ char **makeStrtok(char *string)
 		i++;
 	}
 
-	argv[i] = '\0';
+	argv[i] = NULL;
 	return (argv);
 }

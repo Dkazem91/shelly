@@ -3,15 +3,13 @@ char *navPath(char *string)
 {
 	extern char **environ;
 	char *copy, *token, *compare = "PATH", *full;
-	char *full2;
 	int i = 0;
 	struct stat st;
-
+	if(string == NULL)
+		return (NULL);
+	checkBuilt(string);
 	if(stat(string,&st) == 0)
 	  return (string);
-	full = str_concat("/home/vagrant/shelly/",string); //check built-ins
-	if(stat(full,&st) == 0)
-		return(full);
 	else
 	{
 		free(full);
@@ -34,6 +32,5 @@ char *navPath(char *string)
 	}
 	free(full);
 	free(copy);
-	perror("wrong thing happened!");
 	return (NULL);
 }

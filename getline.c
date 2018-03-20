@@ -9,9 +9,9 @@ char *getLine(void)
 	read = getline(&line, &len,stdin);
 	if(read <= 0)
 	{
-		perror("error");
+		perror("errorREADING");
 		exit(99);
 	}
-	printf("%ld\n", read);
+	line[read - 1] = '\0';
 	return(line);
 }

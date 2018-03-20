@@ -1,0 +1,9 @@
+#include "shell.h"
+void checkBuilt(char *string)
+{
+	if(_strcmp(string,"exit"))
+	{
+		perror("now exiting");
+		exit(0);
+	}
+}
