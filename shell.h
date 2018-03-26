@@ -10,7 +10,7 @@
 #include <signal.h>
 #include <errno.h>
 int _findC(char *s1,const char s2);
-char *getLine(void);
+char *getLine(int code);
 char **makeStrtok(char *string);
 char *getPath(char *string);
 int _strcmp(char *s1,const char *s2);

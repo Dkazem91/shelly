@@ -1,5 +1,5 @@
 #include "shell.h"
-char *getLine(void)
+char *getLine(int code)
 {
 	char *line = NULL;
 	ssize_t read;
@@ -10,7 +10,7 @@ char *getLine(void)
 	read = getline(&line, &len,stdin);
 	if(read  <= 0)
 	{
-		exit(0);
+		_exit(code);
 	}
 	return(line);
 }

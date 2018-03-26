@@ -33,7 +33,7 @@ char *itos(int digits)
 int errors(char * source, char *command, int code)
 {
 	int atty = isatty(STDIN_FILENO);
-	static int i = 0;
+	static int i = 0, eCode = 0;
 	char *number;
 	if(code > 0)
 	{
@@ -47,22 +47,20 @@ int errors(char * source, char *command, int code)
 			free(number);
 		}
 	}
+	if (code == 0)
+	{
+		eCode = 0;
+	}
 	if (code == 1)
 	{
 		//command not a file or directory
 		write(2,command,_strLen(command));
 		write(2,": not a file or directory\n",27);
-		if(atty)
-			return(0);
-		else
-			return(0);
+		eCode = 0;
 	}
 	if(code == 2)
 	{
-		//command not a directory?
-		errno = 1;
-		perror(command);
-		return(1);
+		//command not a directory? don't have cd
 	}
 	if (code == 3)
 	{
@@ -72,26 +70,26 @@ int errors(char * source, char *command, int code)
 		else
 			write(2,": command not found\n",21);
 		if(atty == 0)
-			return(127);
+		        eCode = 127;
 		else
-			return(0);
+			eCode = 0;
 	}
 	if(code == 4)
 	{
 		//permission denied
 		write(2,command,_strLen(command));
 		write(2,": permission denied\n",21);
-		return(126);
+		eCode = 126;
 	}
 	if(code == 5)
 	{
 		//misuse of shell commmands
-		perror(command);
-		return(2);
 	}
 	if(code == 6)
 	{
-		perror(command);
-		return(128);
+		write(2,command,_strLen(command));
+		write(2,": exit error\n",14);
+		eCode = 128;
 	}
+	return (eCode);
 }
