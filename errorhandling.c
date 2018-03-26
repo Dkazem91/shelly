@@ -32,12 +32,12 @@ char *itos(int digits)
  */
 int errors(char * source, char *command, int code)
 {
-	extern int errno;
+	int atty = isatty(STDIN_FILENO);
 	static int i = 0;
 	char *number;
 	if(code > 0)
 	{
-		if(isatty(STDIN_FILENO) == 0)
+		if(atty == 0)
 		{
 			number = itos(++i);
 			write(2,source,_strLen(source));
@@ -52,7 +52,10 @@ int errors(char * source, char *command, int code)
 		//command not a file or directory
 		write(2,command,_strLen(command));
 		write(2,": not a file or directory\n",27);
-		return(1);
+		if(atty)
+			return(0);
+		else
+			return(0);
 	}
 	if(code == 2)
 	{
@@ -64,11 +67,14 @@ int errors(char * source, char *command, int code)
 	if (code == 3)
 	{
 		write(2,command,_strLen(command));
-		if(isatty(STDIN_FILENO) == 0)
+		if(atty == 0)
 			write(2,": not found\n",13);
 		else
 			write(2,": command not found\n",21);
-		return(127);
+		if(atty == 0)
+			return(127);
+		else
+			return(0);
 	}
 	if(code == 4)
 	{
