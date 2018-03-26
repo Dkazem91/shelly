@@ -1,5 +1,5 @@
 #include "shell.h"
-int _findC(char *s1,const char s2)
+int _findC(const char *s1,char s2)
 {
 	int i = 0;
 

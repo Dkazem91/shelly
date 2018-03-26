@@ -6,7 +6,7 @@ char **makeStrtok(char *string)
 	char * token;
 	char **argv;
 
-	argv = malloc(sizeof(char *));
+	argv = malloc(sizeof(char *) * n);
 	token = strtok(string," \n");
 	while (token != NULL)
 	{

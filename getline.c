@@ -12,5 +12,6 @@ char *getLine(int code)
 	{
 		_exit(code);
 	}
+	line[read] = '\0';
 	return(line);
 }

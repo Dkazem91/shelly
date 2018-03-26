@@ -1,7 +1,7 @@
 #include "shell.h"
 int main (int ac, char *argv[])
 {
-	int i = 0,status,built,freeflag = 0, filePath;
+	int i = 0,status,built,freeflag = 0, filePath = 0,j = 0;
 	int eCode = 0;
 	extern char **environ;
 	char **argvs, *command,*token;
@@ -13,13 +13,16 @@ int main (int ac, char *argv[])
 	{
 		command = getLine(eCode);
 		argvs = makeStrtok(command);
-		i = 0;
-		built = checkBuilt(ac, argvs);
+		while(argvs[j])
+			j++;
+		built = checkBuilt(j, argvs, argv[0],eCode);
+		j = 0;
 		if(built == 0)
 		{
 			filePath = navPath(&argvs[0],&freeflag);
+			eCode = errors(argv[0],argvs,filePath);
 		}
-			eCode = errors(argv[0],argvs[0],filePath);
+			eCode = built;
 		if(argvs[0] == NULL || built != 0 || filePath != 0)
 		{
 			free(argvs);
@@ -31,7 +34,7 @@ int main (int ac, char *argv[])
 		{
 			if(execve(argvs[0],argvs,environ) == -1)
 			{
-				errors(argv[0],argvs[0],4);
+				errors(argv[0],argvs,4);
 			}
 		}
 		else

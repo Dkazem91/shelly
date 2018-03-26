@@ -30,14 +30,14 @@ char *itos(int digits)
  * @command: pass in your tokenized arguments from getline
  * @code: code to specify the error message
  */
-int errors(char * source, char *command, int code)
+int errors(char * source, char **command, int code)
 {
 	int atty = isatty(STDIN_FILENO);
 	static int i = 0, eCode = 0;
 	char *number;
 	if(code > 0)
 	{
-		if(atty == 0)
+		if(atty == 0 && code != 6 && code != 7)
 		{
 			number = itos(++i);
 			write(2,source,_strLen(source));
@@ -54,7 +54,7 @@ int errors(char * source, char *command, int code)
 	if (code == 1)
 	{
 		//command not a file or directory
-		write(2,command,_strLen(command));
+		write(2,command[0],_strLen(command[0]));
 		write(2,": not a file or directory\n",27);
 		eCode = 0;
 	}
@@ -64,7 +64,7 @@ int errors(char * source, char *command, int code)
 	}
 	if (code == 3)
 	{
-		write(2,command,_strLen(command));
+		write(2,command[0],_strLen(command[0]));
 		if(atty == 0)
 			write(2,": not found\n",13);
 		else
@@ -77,7 +77,7 @@ int errors(char * source, char *command, int code)
 	if(code == 4)
 	{
 		//permission denied
-		write(2,command,_strLen(command));
+		write(2,command[0],_strLen(command[0]));
 		write(2,": permission denied\n",21);
 		eCode = 126;
 	}
@@ -87,9 +87,34 @@ int errors(char * source, char *command, int code)
 	}
 	if(code == 6)
 	{
-		write(2,command,_strLen(command));
-		write(2,": exit error\n",14);
+		if(isatty(STDIN_FILENO) == 0)
+			write(2,"logout\n",8);
+		write(2,source,_strLen(source));
+		write(2,": ",2);
+		write(2,command[0],_strLen(command[0]));
+		write(2,": too many arguments\n",22);
+		eCode = 1;
+	}
+	if(code == 7)
+	{
+		if(isatty(STDIN_FILENO) == 0)
+			write(2,"logout\n",8);
+		write(2,source,_strLen(source));
+		write(2,": ",2);
+		write(2,command[0],_strLen(command[0]));
+		write(2,": ",2);
+		write(2,command[1],_strLen(command[1]));
+		write(2,": numeric argument required\n",29);
 		eCode = 128;
 	}
+
+	if(code == 8)
+	{
+		//permission denied
+		write(2,command[0],_strLen(command[0]));
+		write(2,": invalid arguments\n",21);
+		eCode = 1;
+	}
+
 	return (eCode);
 }

@@ -2,7 +2,7 @@
 int navPath(char **string, int *freeflag)
 {
 	extern char **environ;
-	char *copy, *token, *compare = "PATH", *full;
+	char *copy, *token, *compare = "PATH", *fileP,*full;
 	int i = 0;
 	struct stat st;
 	if(*string == NULL)
@@ -19,8 +19,9 @@ int navPath(char **string, int *freeflag)
 	token = strtok(copy, "=:");
 	while(token != NULL)
 	{
-		full = str_concat("/",*string);
-		full = str_concat(token,full);
+		fileP = str_concat("/",*string);
+		full = str_concat(token,fileP);
+		free(fileP);
 		if(stat(full,&st) == 0)
 		{
 			*freeflag = 1;
@@ -29,8 +30,8 @@ int navPath(char **string, int *freeflag)
 			return(0);
 		}
 		token = strtok(NULL,"=:");
+		free(full);
 	}
-	free(full);
 	free(copy);
         if(_findC(*string,'/') == 0)
 		return(3);

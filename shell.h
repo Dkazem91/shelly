@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <errno.h>
-int _findC(char *s1,const char s2);
+int _findC(const char *s1,char s2);
 char *getLine(int code);
 char **makeStrtok(char *string);
 char *getPath(char *string);
@@ -18,10 +18,11 @@ char *_strdup(char *str);
 char *str_concat(const char *s1, const char *s2);
 int navPath(char **string, int *free);
 void *_realloc(void *ptr, unsigned int new_size);
-int checkBuilt(int ac, char **argv);
+int checkBuilt(int ac, char **argv, char *source, int code);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
 int _strLen(char *string);
 void histCall(char **string);
-int errors(char *source,char *command, int code);
+int errors(char *source,char **command, int code);
+char *itos(int digits);
 #endif

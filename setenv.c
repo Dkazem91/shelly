@@ -10,10 +10,12 @@ int _setenv(const char *name, const char *value, int overwrite)
 {
 	extern char **environ;
 	char **envCopy;
-	char *newEnv, *compare,*nameCopy,*valCopy;
+	char *newEnv, *compare,*nameCopy,*valCopy,*newPath;
 	int envLen = 0, same = 0;
 	int vaLen, i, naLen;
 
+	if (name == NULL || _findC(name,'='))
+		return (-1);
 	envCopy = environ;
 	valCopy = str_concat(NULL, value);
 	nameCopy = str_concat(NULL, name);
@@ -21,7 +23,6 @@ int _setenv(const char *name, const char *value, int overwrite)
 	{
 		if (_strcmp(environ[envLen],nameCopy))
 		{
-			printf("FOUND A MATCH \n");
 			same = envLen;
 		}
 		envLen++;
@@ -29,20 +30,21 @@ int _setenv(const char *name, const char *value, int overwrite)
 
 	if (same)
 	{
-		printf("i'm in here!\n");
 		if(overwrite)
 		{
-			printf("I'm in overwrite too!\n");
 			newEnv = str_concat(nameCopy,"=");
-			newEnv = str_concat(newEnv,valCopy);
-			environ[same] = newEnv;
+			newPath = str_concat(newEnv,valCopy);
+			free(newEnv);
+			environ[same] = newPath;
 			i = 0;
-			while(environ[i])
-				printf("%s\n",environ[i++]);
+			free(nameCopy);
+			free(valCopy);
 			return(0);
 		}
 		else
 		{
+			free(nameCopy);
+			free(valCopy);
 			return(0);
 		}
 
@@ -74,11 +76,14 @@ int _unsetenv(const char *name)
 {
 	extern char **environ;
 	int envLen = 0, same = -1;
+
+	if (name == NULL || _findC(name,'='))
+		return (-1);
+
 	while(environ[envLen])
 	{
 		if (_strcmp(environ[envLen],name))
 		{
-			printf("FOUND A DELETE \n");
 			same = envLen;
 		}
 		envLen++;
@@ -90,8 +95,5 @@ int _unsetenv(const char *name)
 		environ[same] = environ[same + 1];
 		same++;
 	}
-	same = 0;
-	while(environ[same])
-		printf("%s\n",environ[same++]);
 
 }
