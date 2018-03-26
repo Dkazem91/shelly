@@ -2,7 +2,7 @@
 int main (int ac, char *argv[])
 {
 	int i = 0,status,built,freeflag = 0, filePath;
-	static int eCode = 0;
+	int eCode = 0;
 	extern char **environ;
 	char **argvs, *command,*token;
 	size_t len = 0;
