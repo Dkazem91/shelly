@@ -1,8 +1,20 @@
 #include "shell.h"
+int _findC(char *s1,const char s2)
+{
+	int i = 0;
+
+	while(s1[i])
+	{
+		if(s1[i++] == s2)
+			return(1);
+	}
+	return(0);
+}
 int _strcmp(char *s1, const char*s2)
 {
         int i = 0;
-
+	if(s1 == NULL)
+		return (0);
         while(s2[i])
         {
                 if(s1[i] != s2[i])

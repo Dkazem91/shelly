@@ -1,18 +1,14 @@
 #include "shell.h"
-char *navPath(char *string)
+int navPath(char **string, int *freeflag)
 {
 	extern char **environ;
 	char *copy, *token, *compare = "PATH", *full;
 	int i = 0;
 	struct stat st;
-	if(string == NULL)
-		return (NULL);
-	if(stat(string,&st) == 0)
-	  return (string);
-	else
-	{
-		free(full);
-	}
+	if(*string == NULL)
+		return (-1);
+	if(stat(*string,&st) == 0 && _findC(*string,'/') == 1)
+	  return (0);
 	while(environ[i])
 	{
 		if(_strcmp(environ[i],compare))
@@ -23,13 +19,20 @@ char *navPath(char *string)
 	token = strtok(copy, "=:");
 	while(token != NULL)
 	{
-		full = str_concat("/",string);
+		full = str_concat("/",*string);
 		full = str_concat(token,full);
 		if(stat(full,&st) == 0)
-			return(full);
+		{
+			*freeflag = 1;
+			free(copy);
+			*string = full;
+			return(0);
+		}
 		token = strtok(NULL,"=:");
 	}
 	free(full);
 	free(copy);
-	return (NULL);
+        if(_findC(*string,'/') == 0)
+		return(3);
+	return (1);
 }

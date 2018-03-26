@@ -5,13 +5,12 @@ char *getLine(void)
 	ssize_t read;
 	size_t len = 0;
 
-	printf("my super simple shell ");
+	if(isatty(STDIN_FILENO))
+		write(1,"#cisfun$ ",10);
 	read = getline(&line, &len,stdin);
-	if(read <= 0)
+	if(read  <= 0)
 	{
-		perror("errorREADING");
-		exit(99);
+		exit(0);
 	}
-	line[read - 1] = '\0';
 	return(line);
 }
