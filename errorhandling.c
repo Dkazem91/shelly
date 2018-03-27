@@ -87,8 +87,6 @@ int errors(char * source, char **command, int code)
 	}
 	if(code == 6)
 	{
-		if(isatty(STDIN_FILENO) == 0)
-			write(2,"logout\n",8);
 		write(2,source,_strLen(source));
 		write(2,": ",2);
 		write(2,command[0],_strLen(command[0]));
@@ -97,8 +95,6 @@ int errors(char * source, char **command, int code)
 	}
 	if(code == 7)
 	{
-		if(isatty(STDIN_FILENO) == 0)
-			write(2,"logout\n",8);
 		write(2,source,_strLen(source));
 		write(2,": ",2);
 		write(2,command[0],_strLen(command[0]));

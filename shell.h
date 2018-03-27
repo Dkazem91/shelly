@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <errno.h>
+extern char **environ;
 int _findC(const char *s1,char s2);
 char *getLine(int code);
 char **makeStrtok(char *string);
@@ -25,4 +26,6 @@ int _strLen(char *string);
 void histCall(char **string);
 int errors(char *source,char **command, int code);
 char *itos(int digits);
+void envCopy(void);
+void freeEnv(void);
 #endif

@@ -1,7 +1,6 @@
 #include "shell.h"
 int navPath(char **string, int *freeflag)
 {
-	extern char **environ;
 	char *copy, *token, *compare = "PATH", *fileP,*full;
 	int i = 0;
 	struct stat st;

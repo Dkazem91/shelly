@@ -10,6 +10,7 @@ char *getLine(int code)
 	read = getline(&line, &len,stdin);
 	if(read  <= 0)
 	{
+		freeEnv();
 		_exit(code);
 	}
 	line[read] = '\0';

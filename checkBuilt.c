@@ -45,7 +45,6 @@ int _atoi(char *s)
 }
 int checkBuilt(int ac, char **argv, char *source,int code)
 {
-	extern char **environ;
 	int i = 0;
 
 	if(_strcmp(argv[0],"exit"))
@@ -55,6 +54,7 @@ int checkBuilt(int ac, char **argv, char *source,int code)
 		{
 			free(argv[0]);
 			free(argv);
+			freeEnv();
 			exit(code);
 		}
 		if(isNumber(argv[1]) && ac > 2)
@@ -64,6 +64,7 @@ int checkBuilt(int ac, char **argv, char *source,int code)
 		if(isNumber(argv[1]) == 0)
 			return (errors(source,argv,7));
 		number = _atoi(argv[1]);
+		freeEnv();
 		exit(number % 256);
 	}
 
@@ -95,6 +96,8 @@ int checkBuilt(int ac, char **argv, char *source,int code)
 		}
 		return(1);
 	}
+	if(_strcmp(argv[0],"history"))
+		return (0);
 
 	return(0);
 }

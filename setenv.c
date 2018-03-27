@@ -8,15 +8,12 @@ int _strLen(char *string)
 }
 int _setenv(const char *name, const char *value, int overwrite)
 {
-	extern char **environ;
-	char **envCopy;
 	char *newEnv, *compare,*nameCopy,*valCopy,*newPath;
 	int envLen = 0, same = 0;
 	int vaLen, i, naLen;
 
 	if (name == NULL || _findC(name,'='))
 		return (-1);
-	envCopy = environ;
 	valCopy = str_concat(NULL, value);
 	nameCopy = str_concat(NULL, name);
 	while(environ[envLen])
@@ -49,24 +46,12 @@ int _setenv(const char *name, const char *value, int overwrite)
 		}
 
 	}
-	envCopy = malloc((envLen + 2) * sizeof(char*));
-	for(i = 0; i < envLen; i++)
-	{
-		char *envVar = str_concat(NULL,environ[i]);
-		envCopy[i] = envVar;
-	}
-	int j = 0;
+	environ = _realloc(environ,(envLen + 2) * sizeof(char*));
 	newEnv = str_concat(nameCopy,"=");
-	newEnv = str_concat(newEnv,valCopy);
-	envCopy[i] = newEnv;
-	envCopy[i + 1] = NULL;
-	environ = envCopy;
-	i = 0;
-	while(environ[i])
-	{
-		printf("%s\n",environ[i]);
-		i++;
-	}
+	newPath = str_concat(newEnv,valCopy);
+	free(newEnv);
+	environ[envLen] = newPath;
+	environ[envLen + 1] = NULL;
 	free(nameCopy);
 	free(valCopy);
 	return (0);
@@ -74,7 +59,6 @@ int _setenv(const char *name, const char *value, int overwrite)
 }
 int _unsetenv(const char *name)
 {
-	extern char **environ;
 	int envLen = 0, same = -1;
 
 	if (name == NULL || _findC(name,'='))
@@ -92,8 +76,38 @@ int _unsetenv(const char *name)
 		return (0);
 	while(environ[same])
 	{
+		free(environ[same]);
 		environ[same] = environ[same + 1];
 		same++;
 	}
+}
 
+void freeEnv(void)
+{
+	int i = 0;
+
+	while(environ[i] != NULL)
+	{
+		free(environ[i]);
+		i++;
+	}
+	free(environ);
+}
+
+void envCopy(void)
+{
+	char **envCopy, *envString;
+	int i, len = 0;
+
+	while(environ[len])
+		len++;
+
+	envCopy = malloc(sizeof(char *) * (len + 1));
+	for(i = 0; i < len; i++)
+	{
+		char *envString = str_concat(NULL,environ[i]);
+		envCopy[i] = envString;
+	}
+	envCopy[i] = NULL;
+	environ = envCopy;
 }

@@ -1,14 +1,13 @@
 #include "shell.h"
 int main (int ac, char *argv[])
 {
-	int i = 0,status,built,freeflag = 0, filePath = 0,j = 0;
-	int eCode = 0;
-	extern char **environ;
+	int i = 0,status,built,freeflag = 0, filePath = 0,j = 0,eCode = 0;
 	char **argvs, *command,*token;
 	size_t len = 0;
 	pid_t child;
 
 	signal(SIGINT,SIG_IGN);
+	envCopy();
 	while(i == 0)
 	{
 		command = getLine(eCode);
