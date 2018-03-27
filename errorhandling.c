@@ -33,13 +33,14 @@ char *itos(int digits)
 int errors(char * source, char **command, int code)
 {
 	int atty = isatty(STDIN_FILENO);
-	static int i = 0, eCode = 0;
+	int eCode = 0;
 	char *number;
+
 	if(code > 0)
 	{
 		if(atty == 0 && code != 6 && code != 7)
 		{
-			number = itos(++i);
+			number = itos(line);
 			write(2,source,_strLen(source));
 			write(2,": ",2);
 			write(2,number,_strLen(number));

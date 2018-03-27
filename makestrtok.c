@@ -10,8 +10,8 @@ char **makeStrtok(char *string)
 	token = strtok(string," \n");
 	while (token != NULL)
 	{
-		argv = _realloc(argv,++n * sizeof(char *));
 		argv[i] = token;
+		argv = _realloc(argv,++n * sizeof(char *));
 		token = strtok(NULL," \n");
 		i++;
 	}

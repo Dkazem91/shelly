@@ -10,6 +10,7 @@
 #include <signal.h>
 #include <errno.h>
 extern char **environ;
+extern int line;
 int _findC(const char *s1,char s2);
 char *getLine(int code);
 char **makeStrtok(char *string);
