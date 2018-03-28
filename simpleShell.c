@@ -1,10 +1,9 @@
 #include "shell.h"
 int line = 0;
-int main (int ac, char *argv[])
+int main (__attribute__((unused))int ac, char *argv[])
 {
-	int i = 0,status,built,freeflag = 0, filePath = 0,eCode = 0,j;
-	char **argvs, *command,*token;
-	size_t len = 0;
+	int i = 0,status,built,freeflag = 0, filePath = 0,eCode = 0,j = 0;
+	char **argvs, *command;
 	pid_t child;
 
 	signal(SIGINT,SIG_IGN);
@@ -14,8 +13,10 @@ int main (int ac, char *argv[])
 		command = getLine(eCode);
 		line++;
 		argvs = makeStrtok(command);
-		for(j = 0;argvs[j];j++)
+		while(argvs[j])
+			j++;
 		built = checkBuilt(j, argvs, argv[0],eCode);
+		j = 0;
 		if(built == 0)
 		{
 			filePath = navPath(&argvs[0],&freeflag);

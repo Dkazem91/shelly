@@ -107,7 +107,7 @@ int errors(char * source, char **command, int code)
 
 	if(code == 8)
 	{
-		//permission denied
+		//setenv and unsetenv
 		write(2,command[0],_strLen(command[0]));
 		write(2,": invalid arguments\n",21);
 		eCode = 1;
